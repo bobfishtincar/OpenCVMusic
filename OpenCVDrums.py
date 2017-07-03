@@ -3,6 +3,7 @@ import cv2
 
 # initialize video capture
 cap = cv2.VideoCapture(0)
+lastFrame = None
 
 # continue video recording
 while (True):
@@ -18,6 +19,11 @@ while (True):
 
     # convert to grayscale
     gray = cv2.cvtColor(mirror, cv2.COLOR_BGR2GRAY)
+
+    # create a lastFrame
+    if lastFrame is None:
+        lastFrame = gray
+        continue
 
     # find contours
     ret, thresh = cv2.threshold(gray, 127, 255, 0)
@@ -44,7 +50,6 @@ while (True):
 
     # show the frame
     cv2.imshow('Gray', gray)
-
 
 # release capture on completion
 cap.release()
